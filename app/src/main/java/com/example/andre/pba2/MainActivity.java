@@ -1,25 +1,30 @@
 package com.example.andre.pba2;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 
+import com.example.andre.pba2.adapters.PendingsFoodAdapter;
 import com.example.andre.pba2.models.PendingFood;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements PendingFoodClickListener {
 
+    private PendingsFoodAdapter adapter;
     private PendingsFoodFragment mainActivityFragment;
+    public static final String FOOD_ID= "com.example.andre.pba2.KEY.FOOD_ID";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab =  findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,14 +74,29 @@ public class MainActivity extends AppCompatActivity  {
                 dialog.show();
             }
         });
+
+        RecyclerView recyclerView = findViewById(R.id.pendingRv);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager= new LinearLayoutManager((this));
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter= new PendingsFoodAdapter(this);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void updateList(PendingFood pendingFood){
+        adapter.update(pendingFood);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void clickedID(long id) {
+        Intent intent= new Intent(this, DetailsActivity.class);
+        intent.putExtra(FOOD_ID,id);
+        startActivity(intent);
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -92,4 +112,7 @@ public class MainActivity extends AppCompatActivity  {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

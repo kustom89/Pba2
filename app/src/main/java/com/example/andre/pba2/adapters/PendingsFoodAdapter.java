@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.andre.pba2.MainActivity;
 import com.example.andre.pba2.PendingFoodClickListener;
 import com.example.andre.pba2.PendingsFoodFragment;
 import com.example.andre.pba2.R;
@@ -19,13 +20,19 @@ import com.example.andre.pba2.models.PendingFood;
 import java.util.List;
 
 public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapter.VieHolder> {
+
     private PendingFoodClickListener listener;
 
-    public PendingsFoodAdapter(PendingFoodClickListener listener) {
+    private List<PendingFood> pendingFoods=new Queries().pendingFoods();
+
+
+    public PendingsFoodAdapter(MainActivity mainActivity) {
         this.listener = listener;
     }
 
-    private List<PendingFood> pendingFoods=new Queries().pendingFoods();
+    public PendingsFoodAdapter(PendingsFoodFragment pendingsFoodFragment) {
+
+    }
 
 
     @Override
@@ -41,6 +48,15 @@ public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapte
         holder.textView.setText(pendingFood.getName());
         holder.textView2.setText(pendingFood.getDescripcion());
         holder.checkBox.setChecked(pendingFood.isDone());
+
+        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PendingFood auxFood= pendingFoods.get(holder.getAdapterPosition());
+                listener.clickedID(auxFood.getId());
+            }
+        });
+
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -61,24 +77,9 @@ public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapte
                 }
             }
         });
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PendingFood auxPending= pendingFoods.get(holder.getAdapterPosition());
-                listener.clickedID(auxPending.getId());
 
 
-            }
-        });
 
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PendingFood auxPendingFood= pendingFoods.get(holder.getAdapterPosition());
-
-
-            }
-        });
 
 
     }
@@ -93,10 +94,15 @@ public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapte
         notifyDataSetChanged();
     }
 
-    public static class VieHolder extends RecyclerView.ViewHolder{
+    public void update(PendingsFoodAdapter pendingsFoodAdapter) {
+    }
+
+
+    static class VieHolder extends RecyclerView.ViewHolder{
         private CheckBox checkBox;
         private TextView textView;
         private TextView textView2;
+        private LinearLayout itemLayout;
 
         public VieHolder(View itemView) {
             super(itemView);
@@ -104,6 +110,7 @@ public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapte
             checkBox= itemView.findViewById(R.id.pendingFoodCb);
             textView= itemView.findViewById(R.id.pendingTv);
             textView2=itemView.findViewById(R.id.pendingTv2);
+            itemLayout=itemView.findViewById(R.id.foodL1);
 
 
 
