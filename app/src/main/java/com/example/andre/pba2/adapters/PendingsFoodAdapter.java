@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andre.pba2.PendingFoodClickListener;
 import com.example.andre.pba2.PendingsFoodFragment;
@@ -53,6 +54,8 @@ public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapte
                             auxPendingFood.save();
                             pendingFoods.remove(auxPosition);
                             notifyItemRemoved(auxPosition);
+
+
                         }
                     },400);
                 }
@@ -63,6 +66,15 @@ public class PendingsFoodAdapter extends RecyclerView.Adapter<PendingsFoodAdapte
             public void onClick(View v) {
                 PendingFood auxPending= pendingFoods.get(holder.getAdapterPosition());
                 listener.clickedID(auxPending.getId());
+
+
+            }
+        });
+
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PendingFood auxPendingFood= pendingFoods.get(holder.getAdapterPosition());
 
 
             }

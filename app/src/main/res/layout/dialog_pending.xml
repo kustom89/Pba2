@@ -8,6 +8,9 @@
     android:gravity="center_vertical"
     android:background="@color/colorPrimaryDark">
 
+
+
+
     <EditText
         android:id="@+id/pendingEt"
         android:hint="Tipo de comida"

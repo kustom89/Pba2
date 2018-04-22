@@ -13,10 +13,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.example.andre.pba2.models.PendingFood;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private PendingsFoodFragment mainActivityFragment;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         EditText input=dialog.findViewById(R.id.pendingEt);
                         String name=input.getText().toString();
                         EditText input2=dialog.findViewById(R.id.pending2Et);

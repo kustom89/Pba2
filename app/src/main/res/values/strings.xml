@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">FoodList</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="foods_array">
+        <item>Desayuno</item>
+        <item>Almuerzo</item>
+        <item>Cena</item>
+
+    </string-array>
+
 </resources>
